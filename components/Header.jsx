@@ -1,6 +1,8 @@
+"use client";
 import React from 'react'
 import Image from 'next/image'
 import Link from "next/link"
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs'
 const Header = () => {
   return (
     <>
@@ -22,6 +24,24 @@ const Header = () => {
             {/* Seaarch & Locations - Desktop only */}
 
             {/* Right Side Actions */}
+            <div className='flex items-center'>
+              <SignedOut>
+                <SignInButton>
+                  <button className="mr-3 bg-transparent rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-white/5">
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton>
+                <button className="bg-[#6c47ff] text-ceramic-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
+                  Sign Up
+                </button>
+              </SignUpButton>
+            </SignedOut>
+            <SignedIn>
+              {/* Display user's first name next to the UserButton */}
+              <SignedInContent />
+            </SignedIn>
+            </div>
         </div>
 
             {/* Mobile Search and Location - Below Header */}
@@ -33,3 +53,14 @@ const Header = () => {
 }
 
 export default Header
+
+function SignedInContent() {
+  const { user } = useUser();
+  const name = user?.firstName || user?.fullName || user?.emailAddresses?.[0]?.email;
+  return (
+    <div className="flex items-center gap-3">
+      {name && <span className="text-sm font-medium text-gray-200 hidden sm:block">{name}</span>}
+      <UserButton />
+    </div>
+  );
+}
