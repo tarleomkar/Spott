@@ -1,6 +1,8 @@
 "use client";
 
-import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { useAuth } from "@clerk/nextjs";
+import { ConvexReactClient } from "convex/react";
+import { ConvexProviderWithClerk } from "convex/react-clerk"
 
 // Next.js loads env vars from .env.local at startup. Avoid TypeScript's non-null
 // assertion operator (!) in a .jsx file; instead provide a safe fallback so the
@@ -11,5 +13,5 @@ const convex = new ConvexReactClient(
 );
 
 export function ConvexClientProvider({ children }) {
-  return <ConvexProvider client={convex}>{children}</ConvexProvider>;
+  return <ConvexProviderWithClerk client={convex} useAuth={useAuth}>{children}</ConvexProviderWithClerk>;
 }
