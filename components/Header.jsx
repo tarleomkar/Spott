@@ -1,6 +1,12 @@
+"use client";
+
 import React from 'react'
 import Image from 'next/image'
 import Link from "next/link"
+import { SignInButton, UserButton, useUser } from '@clerk/nextjs'
+import { Button } from './ui/button';
+import { Authenticated, Unauthenticated } from  "convex/react"
+
 const Header = () => {
   return (
     <>
@@ -22,6 +28,18 @@ const Header = () => {
             {/* Seaarch & Locations - Desktop only */}
 
             {/* Right Side Actions */}
+            <div className='flex items-center'>
+              <Authenticated>
+                {/* Create Event */}
+
+                <UserButton />
+              </Authenticated>
+              <Unauthenticated>
+                <SignInButton mode='modal'>
+                  <Button size="sm">Sign In</Button>
+                </SignInButton>
+              </Unauthenticated>
+            </div>
         </div>
 
             {/* Mobile Search and Location - Below Header */}
@@ -33,3 +51,14 @@ const Header = () => {
 }
 
 export default Header
+
+function SignedInContent() {
+  const { user } = useUser();
+  const name = user?.firstName || user?.fullName || user?.emailAddresses?.[0]?.email;
+  return (
+    <div className="flex items-center gap-3">
+      {name && <span className="text-sm font-medium text-gray-200 hidden sm:block">{name}</span>}
+      <UserButton />
+    </div>
+  );
+}

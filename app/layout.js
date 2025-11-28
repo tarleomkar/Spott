@@ -1,6 +1,9 @@
 import Header from "@/components/Header";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
+import { ConvexClientProvider } from "./ConvexClientProvider";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 export const metadata = {
   title: "Spot",
@@ -19,6 +22,12 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
+          <ClerkProvider 
+            appearance={{
+              theme: dark,
+          }}
+          >
+          <ConvexClientProvider>
           {/* Header */}
           <Header/>
 
@@ -36,6 +45,8 @@ export default function RootLayout({ children }) {
             <div className="text-sm text-gray-400">Made with 💖 by Omi</div>
           </footer>
         </main>
+          </ConvexClientProvider>
+          </ClerkProvider>
           </ThemeProvider>
       </body>
     </html>
