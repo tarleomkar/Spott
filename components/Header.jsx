@@ -8,7 +8,7 @@ import { Button } from './ui/button';
 import { Authenticated, Unauthenticated } from  "convex/react"
 import { BarLoader } from "react-spinners"
 import { useStoreUser } from '@/hooks/use-store-user';
-import { Plus, Ticket, User } from 'lucide-react';
+import { Plus, Ticket, Calendar , User } from 'lucide-react';
 
 const Header = () => {
 
@@ -62,7 +62,7 @@ const Header = () => {
 
                     <UserButton.Link
                       label='My Events'
-                      labelIcon={<Ticket size={16} />}
+                      labelIcon={<Calendar  size={16} />}
                       href='/my-events'
                     />
                     <UserButton.Action label='manageAccount' />
