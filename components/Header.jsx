@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from "next/link"
 import { SignInButton, UserButton, useUser } from '@clerk/nextjs'
@@ -14,7 +14,8 @@ const Header = () => {
 
   const { isLoading } = useStoreUser()
   const { isLoaded } = useUser();
-  // const []
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+
   return (
     <>
         <nav className='fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-xl z-20 border-b'>
@@ -36,7 +37,7 @@ const Header = () => {
 
             {/* Right Side Actions */}
             <div className='flex items-center'>
-                <Button variant="ghost" size="sm" className="text-white hover:bg-transparent hover:text-white">
+                <Button variant="ghost" size="sm" className="text-white hover:bg-transparent hover:text-white" onClick={() => setShowUpgradeModal(true)}>
                 Pricing
                 </Button>
 
