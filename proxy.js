@@ -8,10 +8,9 @@ const isPortectedRoute = createRouteMatcher([
 ])
 
 export default clerkMiddleware(async (auth, req) => {
-    const { userId } = await auth();
+    const { userId, redirectToSignIn } = await auth();
 
     if (!userId && isPortectedRoute(req)) {
-        const { redirectToSignIn } = await auth();
         return redirectToSignIn();
     }
 return NextResponse.next();
