@@ -81,10 +81,15 @@ export const getPopularEvents = query({
 // get evetns by category
 export const getEventsByCategory = query({
     args: {
+        category: v.string(),
         limit: v.optional(v.number()),
     },
     handler: async (ctx, args) => {
         const now = Date.now();
+
+        if (!args.category) {
+            return [];
+        }
 
         const events = await ctx.db
         .query("events")

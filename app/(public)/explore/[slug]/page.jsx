@@ -29,14 +29,14 @@ const DynamicExplorePage = () => {
 
   const { data: events, isLoading } = useConvexQuery(
     isCategory
-      ? api.explore.getEventsByLocation
+      ? api.explore.getEventsByCategory
       : api.explore.getEventsByLocation,
       isCategory
       ? { category: slug, limit: 50 }
       : city && state
-        ?  {city, state, limit: 50}
-        : "skip"
-    );
+        ? { city, state, limit: 50 }
+        : undefined
+  );
 
   const handleEventClick = (eventSlug) => {
     router.push(`/events/${eventSlug}`);
@@ -51,7 +51,8 @@ const DynamicExplorePage = () => {
     }
 
   if (isCategory) {
-    return <>
+    return ( 
+      <>
       <div className='pb-5'>
         <div className='flex items-center gap-4 mb-4'>
         <div className='text-6xl'>{categoryInfo.icon}</div>
@@ -64,8 +65,8 @@ const DynamicExplorePage = () => {
         </p>
         </div>
         </div>
-
-        {events && events.length > 0 ? (
+      </div>
+      {events && events.length > 0 ? (
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
             {events.map((event) => (
               <EventCard 
@@ -80,11 +81,45 @@ const DynamicExplorePage = () => {
             No event foreground in this category.
           </p>
         )}
-      </div>
     </>
-  }
+  );
+}
 
-  return <div>DynamicExplorePage</div>
+  return (
+  <>
+      <div className='pb-5'>
+        <div className='flex items-center gap-4 mb-4'>
+        <div className='text-6xl'>📍</div>
+        <div>
+          <h1 className='text-5xl md:text-6xl font-bold'>Events in {city}</h1>
+          <p className='text-lg text-muted-foreground mt-2'>{state}, India</p>
+        </div>
+        </div>
+
+      {events && events.length > 0 && (
+        <p className='text-muted-foreground'>
+          {events.length} event{events.length !== 1 ? "s" : ""} found
+        </p>
+      )}
+      </div>
+  
+      {events && events.length > 0 ? (
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+            {events.map((event) => (
+              <EventCard 
+                key={event._id}
+                event={event}
+                onClick={() => handleEventClick(event.slug)}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className='text-muted-foreground'>
+            No event foreground in this category.
+          </p>
+        )}
+    </>
+)
 }
 
 export default DynamicExplorePage
