@@ -42,6 +42,7 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
+    "postcss": "8.4.31",
     "@tailwindcss/postcss": "^4",
     "concurrently": "^9.2.1",
     "eslint": "^9",
